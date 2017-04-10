@@ -58,7 +58,7 @@
       void (el.attachEvent && el.attachEvent('on' + ev, fn));
       void (!(el.addEventListener || el.attachEvent) && function (el, ev) { el['on' + ev] = fn } (el, ev));
     }
-    startTestButton = document.querySelector(".action-start");
+    startTestButton = document.getElementById('startButton');
     addEvent(startTestButton, 'click', function () {
       startTest();
     });
@@ -71,12 +71,12 @@
             name: 'Download',
             type: 'gauge',
             min: 0,
-            max: 1000,
+            max: 100,
             precision: 2,
             axisLine: {
               show: true,
               lineStyle: {
-                color: [[0.1, '#ff4500'], [0.3, '#ffa700'], [1, '#5bc942']],
+                color: [[0.01, 'red'], [0.3, '#5bc942'], [1, '#5bc942']],
                 width: 30,
                 type: 'solid'
               }
@@ -89,6 +89,11 @@
                 color: '#000',
                 width: 1,
                 type: 'solid'
+              }
+            },
+            axisLabel: {
+              textStyle: {
+                color: 'darkslategrey'
               }
             },
             detail: {
@@ -123,8 +128,12 @@
         }
       }
 
-      latencyTest(testPlan.hasIPv6 ? 'IPv6' : 'IPv4');
+      if (testPlan.clientIPAddress) {
+        document.getElementById('clientIPAddress').innerHTML = testPlan.clientIPAddress;
+        removeClass(document.getElementById('clientIPAddress'), 'hide');
+      }
 
+      latencyTest(testPlan.hasIPv6 ? 'IPv6' : 'IPv4');
     });
   }
 
@@ -190,16 +199,15 @@
   }
 
   function startTest() {
-
     if (firstRun) {
       firstRun = false;
     } else {
       var resultsEl = document.querySelectorAll('.test-result');
+      latencyTest(testPlan.hasIPv6 ? 'IPv6' : 'IPv4');
       for (var i = 0; i < resultsEl.length; i++) {
         resultsEl[i].innerHTML = '';
       }
     }
-
 
     void (setTimeout(function () { !firstRun && downloadTest(testPlan.hasIPv6 ? 'IPv6' : 'IPv4'); }, 500));
 
@@ -340,10 +348,22 @@
 
   function updateValue(selector, value) {
     var sel = ['.', selector, '-result'].join('');
+    var labelSel = ['.', selector, '-label'].join('');
     var dom = document.querySelector(sel);
+    var labelDom = document.querySelector(labelSel);
+
+    if (labelDom) {
+      removeClass(labelDom, 'hide');
+    }
 
     if (dom) {
       dom.innerHTML = value;
+      removeClass(dom, 'hide');
+    }
+
+    if (selector === 'upload') {
+      var copyButton = document.getElementById('copyButton');
+      removeClass(copyButton, 'hide');
     }
   }
 
@@ -364,7 +384,7 @@
         void (!(testPlan.hasIPv6 === 'IPv6') && setTimeout(function () { !firstRun && uploadTest(testPlan.hasIPv6 ? 'IPv6' : 'IPv4'); }, 500));
       }
       //void (!(version === 'IPv6') && uploadTest(testPlan.hasIPv6 ? 'IPv6' : 'IPv4'));
-      updateValue([currentTest, '-', version].join(''), finalValue);
+      updateValue(currentTest, finalValue);
     }
 
     function calculateStatsonError(result) {
@@ -506,7 +526,7 @@
         myChart.setOption(option, true);
       }
 
-      updateValue([currentTest, '-', version].join(''), finalValue);
+      updateValue(currentTest, finalValue);
     }
     function uploadHttpOnProgress(result) {
       option.series[0].data[0].value = result;

@@ -1,91 +1,87 @@
-<!--
-  ~ /**
-  ~ * Copyright 2014 Comcast Cable Communications Management, LLC
-  ~ *
-  ~ * Licensed under the Apache License, Version 2.0 (the "License");
-  ~ * you may not use this file except in compliance with the License.
-  ~ * You may obtain a copy of the License at
-  ~ *
-  ~ * http://www.apache.org/licenses/LICENSE-2.0
-  ~ *
-  ~ * Unless required by applicable law or agreed to in writing, software
-  ~ * distributed under the License is distributed on an "AS IS" BASIS,
-  ~ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ * See the License for the specific language governing permissions and
-  ~ * limitations under the License.
-  ~ */
-  -->
-
 <html>
 
 <head>
-    <meta charset="utf-8"/>
-    <base href="/"/>
-    <title> Speed Test</title>
+    <meta charset="utf-8" />
+    <base href="/" />
+    <title>Speed Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
     <link rel="stylesheet" type="text/css" href="speed-testJS.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,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">
 </head>
 
 <body>
-<div class="container speed-test">
-    <div class="row top">
-        <h1 class="logo"></h1>
-        <div class="speed-gauge">
-        </div>
-    </div>
-    <div class="secondary-results flex">
-        <div class="flex">
-            <button class="action-start">Start Test</button>
-        </div>
-        <div class="latency-results">
-            <p>ping: <span class="latency-result test-result"></span></p>
-        </div>
-    </div>
-    <div class="bottom">
-        <div class="results flex">
-            <div class="download flex">
-                <p>download</p>
-                <div class="wrapper">
-                    <i class="ip-icon">IPv4</i>
-                    <div class="download-IPv4-result test-result IPv4">
-                    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 panel panel-default">
+            <div class="panel-body">
+                <h1 class="logo">
+                    <a href="https://www.clearfly.net/" class="logo-link"></a>
+                </h1>
+                <div class="speed-gauge"></div>
+                <div class="results">
+                    <button id="startButton" class="btn btn-default">Start Test</button>
                 </div>
-                <div class="wrapper IPv6 hide">
-                    <i class="ip-icon">IPv6</i>
-                    <div class="download-IPv6-result test-result IPv6">
+                <div id="resultsDiv" class="results">
+                    <p>IP Address: <span id="clientIPAddress" class="hide"></span></p>
+                    <div class="latency-label hide">
+                        <p>Round-Trip Latency: <span class="latency-result test-result hide"></span></p>
                     </div>
+                    <p class="download-label hide">Download Speed: <span class="download-result test-result hide"></span></p>
+                    <p class="upload-label hide">Upload Speed: <span class="upload-result test-result hide"></span></p>
+                    <button id="copyButton" class="copy btn btn-default btn-xs hide" data-clipboard-target="#resultsDiv">
+                        Copy to clipboard<span id="copySuccess" class="text-success hide">&nbsp;<i class="fa fa-check-square-o"></i></span></button>
                 </div>
             </div>
-            <div class="upload">
-                <p>upload</p>
-                <div class="wrapper">
-                    <i class="ip-icon">IPv4</i>
-                    <div class="upload-IPv4-result test-result IPv4">
-                    </div>
-                </div>
-                <div class="wrapper IPv6 hide">
-                    <i class="ip-icon">IPv6</i>
-                    <div class="upload-IPv6-result test-result IPv6">
-                    </div>
-                </div>
-            </div>
+            <div class="col-md-4"></div>
         </div>
-    </div>
-</div>
 
-<script src="lib/latencyBasedRouting.js"></script>
-<script src="lib/calculateStats.js"></script>
-<script src="lib/xmlhttprequest.js"></script>
-<script src="lib/webSocket.js"></script>
-<script src="lib/latencyHttpTest.js"></script>
-<script src="lib/latencyWebSocketTest.js"></script>
-<script src="lib/downloadHttpConcurrentProgress.js"></script>
-<script src="lib/downloadProbeTest.js"></script>
-<script src="lib/uploadHttpConcurrent.js"></script>
-<script src="lib/uploadProbeTest.js"></script>
-<script src="lib/uploadHttpConcurrentProgress.js"></script>
-<script src="lib/uploadHttpMicrosoft.js"></script>
-<script src="uilib/echarts.min.js"></script>
-<script src="speed-testJS.js"></script>
+        <script src="lib/latencyBasedRouting.js"></script>
+        <script src="lib/calculateStats.js"></script>
+        <script src="lib/xmlhttprequest.js"></script>
+        <script src="lib/webSocket.js"></script>
+        <script src="lib/latencyHttpTest.js"></script>
+        <script src="lib/latencyWebSocketTest.js"></script>
+        <script src="lib/downloadHttpConcurrentProgress.js"></script>
+        <script src="lib/downloadProbeTest.js"></script>
+        <script src="lib/uploadHttpConcurrent.js"></script>
+        <script src="lib/uploadProbeTest.js"></script>
+        <script src="lib/uploadHttpConcurrentProgress.js"></script>
+        <script src="lib/uploadHttpMicrosoft.js"></script>
+        <script src="uilib/echarts.min.js"></script>
+        <script src="speed-testJS.js"></script>
+        <script>
+            function indicateSuccess() {
+                var successSpan = document.getElementById('copySuccess');
+                successSpan.classList.remove('hide');
+            }
+
+            var clipboard = new Clipboard('.copy');
+
+            clipboard.on('success', function (e) {
+                e.clearSelection();
+                indicateSuccess();
+            });
+        </script>
 </body>
 
 </html>
